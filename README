@@ -1,0 +1,3 @@
+To run batch customize config.properties and script.txt and type in console :
+
+  mvn exec:java -Dexec.mainClass="info.kapable.app.JImapFilter"
