@@ -30,7 +30,7 @@ TODO
 License
 ----
 
-MIT
-
+ Apache License
+ Version 2.0, January 2004
 
 **Free Software, Hell Yeah!**
