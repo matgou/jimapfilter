@@ -1,6 +1,6 @@
 # JImapFilter
 
-JImapFilter est une application console java basé sur jsieve, vous permetant de trié automatiquement votre boite mail depuis un script sieve.
+JImapFilter est une application console java basé sur jsieve, vous permetant de trier automatiquement votre boite mail depuis un script sieve.
 
 Sieve est un language permetant de créer des scripts pour filtrer les emails (http://sieve.info/). Avec JImapFilter vous allez pouvoir passer des batchs sur vos boites imaps pour trier automatiquements vos emails.
 
