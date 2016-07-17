@@ -17,6 +17,9 @@ import org.apache.jsieve.exception.SieveException;
 import org.apache.jsieve.mail.MailAdapter;
 import org.apache.jsieve.parser.generated.ParseException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import info.kapable.app.Protocole.Imap;
 
 /**
@@ -24,8 +27,11 @@ import info.kapable.app.Protocole.Imap;
  *
  */
 public class JImapFilter {
+        /* Logger */
+        private static final Logger logger = LogManager.getLogger("JImapFilter");
+
 	public static void main(String[] args) {
-		System.out.println("JImapFilter : Hello World!");
+                logger.info("JImapFilter : version 0.0.1 - Starting");
 
 		// Lecture de la configuration initiale
 		Properties prop = new Properties();
@@ -56,8 +62,7 @@ public class JImapFilter {
 			Message messages[] = server.getCurFolder().getMessages();
 			for (int j = 0; j < messages.length; j++) {
 				try {
-					System.out.println("*****************************************************************");
-					System.out.println("Subjet du message a traiter : " + messages[j].getSubject() + " \n");
+					logger.info( j + "/" + messages.length + " : Subjet du message a traiter : " + messages[j].getSubject() + " \n");
 					mail = new SieveMailAdapter(server, messages[j]);
 					factory.interpret(mail, script);
 				} catch (ParseException e) {

@@ -11,6 +11,8 @@ import java.util.Set;
 import javax.mail.Header;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.jsieve.SieveContext;
 import org.apache.jsieve.exception.InternetAddressException;
@@ -24,11 +26,12 @@ import org.apache.jsieve.parser.address.SieveAddressBuilder;
 import info.kapable.app.Protocole.ProtocoleInterface;
 
 public class SieveMailAdapter implements MailAdapter {
-	/**
-	 * The message to process
-	 */
-	protected Message message;
-	private ProtocoleInterface server;
+    static final Logger logger = LogManager.getLogger(SieveMailAdapter.class.getName());
+    /**
+     * The message to process
+     */
+    protected Message message;
+    private ProtocoleInterface server;
 
     private String contentAsLowerCaseString; 
     
@@ -80,7 +83,7 @@ public class SieveMailAdapter implements MailAdapter {
 	public void executeActions() throws SieveException {
 		final List<Action> actions = getActions();
 		for (final Action action : actions) {
-			System.out.println("Executing " + action.toString());
+                    logger.debug("Executing " + action.toString());
 			try
 			{
 				dispatcher.execute(action, this.getMessage(), this.server);
