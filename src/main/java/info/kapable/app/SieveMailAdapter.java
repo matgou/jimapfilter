@@ -128,8 +128,13 @@ public class SieveMailAdapter implements MailAdapter {
 
 	@Override
 	public List<String> getHeader(String name) throws SieveMailException {
+		logger.debug("Start getHeader, param : " + name);
+		
 		try {
 			String[] headers = getMessage().getHeader(name);
+			for (String h: headers) {
+			  logger.debug("return : " +  h);
+			}
 			if (headers == null) {
 				return new ArrayList<String>(0);
 			} else {

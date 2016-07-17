@@ -5,16 +5,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.mail.Folder;
+import javax.mail.Flags;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
+import javax.mail.search.FlagTerm;
 
 import org.apache.jsieve.ConfigurationManager;
 import org.apache.jsieve.SieveConfigurationException;
 import org.apache.jsieve.SieveFactory;
 import org.apache.jsieve.exception.SieveException;
 import org.apache.jsieve.mail.MailAdapter;
+import org.apache.jsieve.parser.generated.Node;
 import org.apache.jsieve.parser.generated.ParseException;
 
 import org.apache.logging.log4j.LogManager;
@@ -27,8 +29,8 @@ import info.kapable.app.Protocole.Imap;
  *
  */
 public class JImapFilter {
-        /* Logger */
-        private static final Logger logger = LogManager.getLogger("JImapFilter");
+    /* Logger */
+    private static final Logger logger = LogManager.getLogger("JImapFilter");
 
 	public static void main(String[] args) {
                 logger.info("JImapFilter : version 0.0.1 - Starting");
@@ -59,15 +61,20 @@ public class JImapFilter {
 			SieveFactory factory = cm.build();
 			MailAdapter mail = null;
 
-			Message messages[] = server.getCurFolder().getMessages();
+			Node node = null;
+			try {
+				node = factory.parse(script);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				System.exit(255);
+			}
+			// Message messages[] = server.getCurFolder().getMessages();
+            Message messages[] = server.getCurFolder().search(new FlagTerm(new Flags(Flags.Flag.DELETED),false)); 
 			for (int j = 0; j < messages.length; j++) {
 				try {
 					logger.info( j + "/" + messages.length + " : Subjet du message a traiter : " + messages[j].getSubject() + " \n");
 					mail = new SieveMailAdapter(server, messages[j]);
-					factory.interpret(mail, script);
-				} catch (ParseException e) {
-					e.printStackTrace();
-					System.exit(255);
+					factory.evaluate(mail, node);
 				} catch (SieveException e) {
 					// Exception non bloquante
 					e.printStackTrace();
