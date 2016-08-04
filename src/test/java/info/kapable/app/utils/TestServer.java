@@ -21,17 +21,14 @@ public class TestServer implements ProtocoleInterface {
 		this.action = "";
 	}
 
-	@Override
 	public void move(Message message, String destination) throws MessagingException {
 		this.action = "Message " + message.getSubject() + " is move to " + destination;
 	}
 
-	@Override
 	public void copy(Message message, String destination) throws MessagingException {
 		this.action = "Message" + message.getSubject() + " is copy to " + destination;
 	}
 
-	@Override
 	public void remove(Message message) throws MessagingException {
 		this.action = "Message" + message.getSubject() + " is deleted";
 	}

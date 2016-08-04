@@ -66,6 +66,7 @@ public class JImapFilter {
 				node = factory.parse(script);
 			} catch (ParseException e) {
 				e.printStackTrace();
+				server.disconnect();
 				System.exit(255);
 			}
 			// Message messages[] = server.getCurFolder().getMessages();
@@ -81,15 +82,18 @@ public class JImapFilter {
 				}
 
 			}
-
+			server.disconnect();
 		} catch (NoSuchProviderException e) {
 			e.printStackTrace();
+			server.disconnect();
 			System.exit(1);
 		} catch (MessagingException e) {
 			e.printStackTrace();
+			server.disconnect();
 			System.exit(2);
 		} catch (SieveConfigurationException e) {
 			e.printStackTrace();
+			server.disconnect();
 			System.exit(255);
 		}
 	}

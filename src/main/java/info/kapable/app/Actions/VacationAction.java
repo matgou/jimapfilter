@@ -10,7 +10,6 @@ import info.kapable.app.Protocole.ProtocoleInterface;
 
 public class VacationAction implements MailAction {
 
-	@Override
 	public void execute(Action anAction, Message message, ProtocoleInterface server) throws MessagingException {
 		try {
 			// TODO Implements function

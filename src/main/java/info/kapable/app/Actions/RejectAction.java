@@ -9,7 +9,6 @@ import info.kapable.app.Protocole.ProtocoleInterface;
 
 public class RejectAction implements MailAction {
 
-	@Override
 	public void execute(Action anAction, Message message, ProtocoleInterface server) throws MessagingException {
 		server.remove(message);
 	}

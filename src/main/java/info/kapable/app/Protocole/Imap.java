@@ -87,7 +87,6 @@ public class Imap implements ProtocoleInterface {
 		this.curFolder = curFolder;
 	}
 
-	@Override
 	public void move(Message message, String destination) throws MessagingException {
 		this.copy(message, destination);
 		this.remove(message);
@@ -104,7 +103,6 @@ public class Imap implements ProtocoleInterface {
         }
     }
 
-	@Override
 	public void copy(Message message, String destination) throws MessagingException {
 		// TODO Auto-generated method stub
 		Folder destFolder = this.getStore().getFolder(destination);
@@ -113,14 +111,29 @@ public class Imap implements ProtocoleInterface {
 		messagesToCopy[0] = message;
 		this.getCurFolder().copyMessages(messagesToCopy, destFolder);
         waitForMoveCompletion(destFolder);
+        destFolder.close(false);
 		
 	}
 
-	@Override
 	public void remove(Message message) throws MessagingException {
 		Message messagesToCopy[] = new Message[1];
 		messagesToCopy[0] = message;
         this.getCurFolder().setFlags(messagesToCopy, new Flags(Flags.Flag.DELETED), true);
+	}
+
+	public void disconnect() {
+		try {
+			this.getCurFolder().close(true);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			this.store.close();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 }

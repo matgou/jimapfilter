@@ -14,6 +14,13 @@ Pour compiler et lancer le batch :
 $ mvn install exec:java -Dexec.mainClass="info.kapable.app.JImapFilter"
 ```
 
+Si vous avez une erreur SSL vous pouvez importer le certificat dans un keystore avec les commandes suivantes en  :
+```sh
+$ echo "" | openssl s_client -connect server:port -prexit 2>/dev/null | sed -n -e '/BEGIN\ CERTIFICATE/,/END\ CERTIFICATE/ p' > trust.crt
+$ keytool -import -alias imap -file trust.crt -keystore trust.jks
+$ mvn install exec:java -Djavax.net.ssl.trustStore=trust.jks -Dexec.mainClass="info.kapable.app.JImapFilter"
+```
+
 ### Development
 
 Want to contribute? Great! => fork it

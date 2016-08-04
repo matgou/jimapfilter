@@ -13,7 +13,6 @@ import info.kapable.app.Protocole.ProtocoleInterface;
 public class FileIntoAction implements MailAction {
         static final Logger logger = LogManager.getLogger(FileIntoAction.class.getName());
 
-	@Override
 	public void execute(Action anAction, Message message, ProtocoleInterface server) throws MessagingException {
 		ActionFileInto action =  (ActionFileInto) anAction;
 		logger.debug("Deplacement du message dans : " + action.getDestination());

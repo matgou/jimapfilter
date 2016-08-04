@@ -11,7 +11,6 @@ import info.kapable.app.Protocole.ProtocoleInterface;
 public class KeepAction implements MailAction {
         static final Logger logger = LogManager.getLogger(KeepAction.class.getName());
 
-	@Override
 	public void execute(Action anAction, Message message, ProtocoleInterface server) {
 		logger.debug("ActionKeep : Rien à faire !");
 	}
